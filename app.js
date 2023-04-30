@@ -1,13 +1,161 @@
 // массив с раскладками клавиатуры en ru
+"use strict";
 
-const ENGrow1 = [['`', '~'], ['1', '!'], ['2', '@'], ['3', '#'], ['4', '$'], ['5', '%'], ['6', '^'], ['7', '&'], ['8', '*'], ['9', '('], ['0', ')'], ['-', '_'], ['=', '+'], 'backspace'];
+const ENGrow1 = [['`', '~'], ['1', '!'], ['2', '@'], ['3', '#'], ['4', '$'], ['5', '%'], ['6', '^'], ['7', '&'],
+                ['8', '*'], ['9', '('], ['0', ')'], ['-', '_'], ['=', '+'], 'backspace'];
 const ENGrow2 = ['Tab', 'Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P', ['[', '{'], [']', '}'], ['\\', '|']];
 const ENGrow3 = ['CapsLock', 'A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L', [';', ':'], ['\'', '"'], 'enter'];
 const ENGrow4 = ['Shift', 'Z', 'X', 'C', 'V', 'B', 'N', 'M', [',', '<'], ['.', '>'], ['/', '?'], '↑', 'Shift'];
 const row5 = ['Ctrl', 'Win', 'Alt', '&nbsp;', 'Alt', 'Ctrl', '←', '↓', '→'];
 
-const RUSrow1 = ['Ё', ['1', '!'], ['2', '"'], ['3', '№'], ['4', ';'], ['5', '%'], ['6', ':'], ['7', '?'], ['8', '*'], ['9', '('], ['0', ')'], ['-', '_'], ['=', '+'], 'backspace'];
-const RUsrow2 = ['Tab', 'Й', 'Ц', 'У', 'К', 'Е', 'Н', 'Г', 'Ш', 'Щ', 'З', 'Х', 'Ъ', ['\\', '/']];
+const RUSrow1 = ['Ё', ['1', '!'], ['2', '"'], ['3', '№'], ['4', ';'], ['5', '%'], ['6', ':'], ['7', '?'],
+                ['8', '*'], ['9', '('], ['0', ')'], ['-', '_'], ['=', '+'], 'backspace'];
+const RUSrow2 = ['Tab', 'Й', 'Ц', 'У', 'К', 'Е', 'Н', 'Г', 'Ш', 'Щ', 'З', 'Х', 'Ъ', ['\\', '/']];
 const RUSrow3 = ['CapsLock', 'Ф', 'Ы', 'В', 'А', 'П', 'Р', 'О', 'Л', 'Д', 'Ж', 'Э', 'enter'];
-const RUsrow4 = ['Shift', 'Я', 'Ч', 'С', 'М', 'И', 'Т', 'Ь', 'Б', 'Ю', ['.', ','], '↑;', 'Shift'];
+const RUSrow4 = ['Shift', 'Я', 'Ч', 'С', 'М', 'И', 'Т', 'Ь', 'Б', 'Ю', ['.', ','], '↑;', 'Shift'];
+
+//KeysAll содержит информацию о клавишах на клавиатуре и соответствующие им символы
+const KeysAll = {
+
+    Backquote: ['`', '~', 'ё', 'Ё'],
+    Digit1: ['1', '!', '1', '!'],
+    Digit2: ['2', '@', '2', '"'],
+    Digit3: ['3', '#', '3', '№'],
+    Digit4: ['4', '$', '4', ';'],
+    Digit5: ['5', '%', '5', '%'],
+    Digit6: ['6', '^', '6', ':'],
+    Digit7: ['7', '&', '7', '?'],
+    Digit8: ['8', '*', '8', '*'],
+    Digit9: ['9', '(', '9', '('],
+    Digit0: ['0', ')', '0', ')'],
+    Minus: ['-', '_', '-', '_'],
+    Equally: ['=', '+', '=', '+'],
+    backspace: ['backspace', 'ctrlButton'],
+
+    Tab: ['    ', '    ', '    ', '    '],
+    KeyQ: ['q', 'Q', 'й', 'Й'],
+    KeyW: ['w', 'W', 'ц', 'Ц'],
+    KeyE: ['e', 'E', 'у', 'У'],
+    KeyR: ['r', 'R', 'к', 'К'],
+    KeyT: ['t', 'T', 'е', 'Е'],
+    KeyY: ['y', 'Y', 'н', 'Н'],
+    KeyU: ['u', 'U', 'г', 'Г'],
+    KeyI: ['i', 'I', 'ш', 'Ш'],
+    KeyO: ['o', 'O', 'щ', 'Щ'],
+    KeyP: ['p', 'P', 'з', 'З'],
+    BracketLeft: ['[', '{', 'х', 'Х'],
+    BracketRight: [']', '}', 'ъ', 'Ъ'],
+    Backslash: ['\\', '|', '\\', '/'],
+
+    CapsLock: ['CapsLock', 'ctrlButton'],
+    KeyA: ['a', 'A', 'ф', 'Ф'],
+    KeyS: ['s', 'S', 'ы', 'Ы'],
+    KeyD: ['d', 'D', 'в', 'В'],
+    KeyF: ['f', 'F', 'а', 'А'],
+    KeyG: ['g', 'G', 'п', 'П'],
+    KeyH: ['h', 'H', 'р', 'Р'],
+    KeyJ: ['j', 'J', 'о', 'О'],
+    KeyK: ['k', 'K', 'л', 'Л'],
+    KeyL: ['l', 'L', 'д', 'Д'],
+    Semicolon: [';', ':', 'ж', 'Ж'],
+    Quote: ['\'', '"', 'э', 'Э'],
+    Enter: ['<br />', 'ctrlButton'],
+
+    ShiftLeft: ['Shift', 'ctrlButton'],
+    KeyZ: ['z', 'Z', 'я', 'Я'],
+    KeyX: ['x', 'X', 'ч', 'Ч'],
+    KeyC: ['c', 'C', 'с', 'С'],
+    KeyV: ['v', 'V', 'м', 'М'],
+    KeyB: ['b', 'B', 'и', 'И'],
+    KeyN: ['n', 'N', 'т', 'Т'],
+    KeyM: ['m', 'M', 'ь', 'Ь'],
+    Comma: [',', '<', 'б', 'Б'],
+    Period: ['.', '>', 'ю', 'Ю'],
+    Slash: ['/', '?', '.', ','],
+    ArrowUp: ['↑;', 'ctrlButton'],
+    ShiftRight: ['Shift', 'ctrlButton'],
+
+    ControlLeft: ['Control', 'ctrlButton'],
+    WindowsLeft: ['Windows', 'ctrlButton'],
+    AltLeft: ['Alt', 'ctrlButton'],
+    Space: [' ', ' ', ' ', ' '],
+    AltRight: ['Alt', 'ctrlButton'],
+    ControlRight: ['Control', 'ctrlButton'],
+    ArrowLeft: ['←', 'ctrlButton'],
+    ArrowDown: ['↓', 'ctrlButton'],
+    ArrowRight: ['→', 'ctrlButton'],
+  };
+
+   const codesArray = Object.keys(KeysAll);
+
+   //
+const buttonsWidth = [55, 55, 55, 55, 55, 55, 55, 55, 55, 55, 55, 55, 55, 90,
+                     90, 55, 55, 55, 55, 55, 55, 55, 55, 55, 55, 55, 55, 55,
+                     100, 55, 55, 55, 55, 55, 55, 55, 55, 55, 55, 55, 100,150,
+                     55, 55, 55, 55, 55, 55, 55, 55, 55, 55, 55, 55,55, 55,
+                     55, 405, 55, 55, 55, 55, 55];
+
+class Keyboard {
+  constructor() {
+    this.inputWindow = document.createElement('div');
+    this.printedText = document.createElement('textarea');
+    this.currentLanguage = document.createElement('div');
+    this.KeyboardWindow = document.createElement('div');
+    this.information = document.createElement('div');
+    this.button = document.createElement('div');
+    this.language = '';
+    this.CapsLockStatus = false;
+    this.shiftStatus = false;
+    }
+
+createMain() {
+    document.body.append(this.inputWindow);
+    this.inputWindow.classList.add('inputWindow');
+    this.inputWindow.append(this.printedText);
+    this.printedText.classList.add('printedText');
+    document.body.append(this.KeyboardWindow);
+    this.KeyboardWindow.className = 'keyboard';
+    document.body.append(this.information);
+    this.information.classList.add('information');
+    this.information.innerHTML = 'Для переключения языка комбинация: левыe Shift + Control. <br /> Клавиатура создана в операционной системе Windows <br /> ';
+}
+createButtons() {
+    for (let i = 0; i < buttonsWidth.length; i += 1) {
+      const button = document.createElement('div');
+      button.classList.add('button');
+      button.setAttribute('id', codesArray[i]);
+      button.style.width = `${buttonsWidth[i]}px`;
+      this.KeyboardWindow.append(button);
+    }
+  }
+
+  addButtonText() {
+    const allButtons = this.KeyboardWindow.querySelectorAll('.button');
+
+    for (let x = 0; x < this.keys.length; x += 1) {
+      const button = allButtons[x];
+      if (Array.isArray(this.keys[x])) {
+        button.classList.add('doubleInputButton');
+        const noShiftText = document.createElement('div');
+        const shiftText = document.createElement('div');
+        shiftText.classList.add('shiftText');
+        noShiftText.classList.add('noShiftText');
+        button.append(shiftText);
+        button.append(noShiftText);
+        const [a, b] = this.keys[x];
+        shiftText.innerHTML = b;
+        noShiftText.innerHTML = a;
+      } else {
+        button.innerHTML = this.keys[x];
+      }
+    }
+  }
+
+}
+
+const NewKeyboard = new Keyboard();
+
+NewKeyboard.createMain();
+NewKeyboard.createButtons();
+NewKeyboard.addButtonText();
 
