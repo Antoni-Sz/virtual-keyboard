@@ -2,17 +2,17 @@
 "use strict";
 
 const ENGrow1 = [['`', '~'], ['1', '!'], ['2', '@'], ['3', '#'], ['4', '$'], ['5', '%'], ['6', '^'], ['7', '&'],
-                ['8', '*'], ['9', '('], ['0', ')'], ['-', '_'], ['=', '+'], 'backspace'];
+                ['8', '*'], ['9', '('], ['0', ')'], ['-', '_'], ['=', '+'], 'Backspace'];
 const ENGrow2 = ['Tab', 'Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P', ['[', '{'], [']', '}'], ['\\', '|']];
 const ENGrow3 = ['CapsLock', 'A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L', [';', ':'], ['\'', '"'], 'enter'];
-const ENGrow4 = ['Shift', 'Z', 'X', 'C', 'V', 'B', 'N', 'M', [',', '<'], ['.', '>'], ['/', '?'], '↑', 'Shift'];
-const row5 = ['Ctrl', 'Win', 'Alt', '&nbsp;', 'Alt', 'Ctrl', '←', '↓', '→'];
+const ENGrow4 = ['Shift', 'Z', 'X', 'C', 'V', 'B', 'N', 'M', [',', '<'], ['.', '>'], ['/', '?'], '▲', 'Shift'];
+const row5 = ['Ctrl', 'Win', 'Alt', '&nbsp;', 'Alt', 'Ctrl', '◄', '▼', '►'];
 
 const RUSrow1 = ['Ё', ['1', '!'], ['2', '"'], ['3', '№'], ['4', ';'], ['5', '%'], ['6', ':'], ['7', '?'],
-                ['8', '*'], ['9', '('], ['0', ')'], ['-', '_'], ['=', '+'], 'backspace'];
+                ['8', '*'], ['9', '('], ['0', ')'], ['-', '_'], ['=', '+'], 'Backspace'];
 const RUSrow2 = ['Tab', 'Й', 'Ц', 'У', 'К', 'Е', 'Н', 'Г', 'Ш', 'Щ', 'З', 'Х', 'Ъ', ['\\', '/']];
 const RUSrow3 = ['CapsLock', 'Ф', 'Ы', 'В', 'А', 'П', 'Р', 'О', 'Л', 'Д', 'Ж', 'Э', 'enter'];
-const RUSrow4 = ['Shift', 'Я', 'Ч', 'С', 'М', 'И', 'Т', 'Ь', 'Б', 'Ю', ['.', ','], '↑', 'Shift'];
+const RUSrow4 = ['Shift', 'Я', 'Ч', 'С', 'М', 'И', 'Т', 'Ь', 'Б', 'Ю', ['.', ','], '▲', 'Shift'];
 
 //KeysAll содержит информацию о клавишах на клавиатуре и соответствующие им символы
 const KeysAll = {
@@ -30,7 +30,7 @@ const KeysAll = {
     Digit0: ['0', ')', '0', ')'],
     Minus: ['-', '_', '-', '_'],
     Equally: ['=', '+', '=', '+'],
-    backspace: ['backspace', 'ctrlButton'],
+    Backspace: ['Backspace', 'ctrlButton'],
 
     Tab: ['    ', '    ', '    ', '    '],
     KeyQ: ['q', 'Q', 'й', 'Й'],
@@ -72,7 +72,7 @@ const KeysAll = {
     Comma: [',', '<', 'б', 'Б'],
     Period: ['.', '>', 'ю', 'Ю'],
     Slash: ['/', '?', '.', ','],
-    ArrowUp: ['↑;', 'ctrlButton'],
+    ArrowUp: ['▲', 'ctrlButton'],
     ShiftRight: ['Shift', 'ctrlButton'],
 
     ControlLeft: ['Control', 'ctrlButton'],
@@ -81,9 +81,9 @@ const KeysAll = {
     Space: [' ', ' ', ' ', ' '],
     AltRight: ['Alt', 'ctrlButton'],
     ControlRight: ['Control', 'ctrlButton'],
-    ArrowLeft: ['←', 'ctrlButton'],
-    ArrowDown: ['↓', 'ctrlButton'],
-    ArrowRight: ['→', 'ctrlButton'],
+    ArrowLeft: ['◄', 'ctrlButton'],
+    ArrowDown: ['▼', 'ctrlButton'],
+    ArrowRight: ['►', 'ctrlButton'],
   };
 
    const codesArray = Object.keys(KeysAll);
@@ -230,7 +230,7 @@ createButtons() {
       }
     } else if (activeKey[0] === 'Shift') {
       this.shiftStatus = true;
-    } else if (event.code === 'backspace') {
+    } else if (event.code === 'Backspace') {
       this.printedText.value = this.printedText.value.slice(0, -1);
     } else if (event.code === 'Enter') {
       this.printedText.setRangeText('\n', this.printedText.selectionStart, this.printedText.selectionEnd, 'end');
@@ -349,7 +349,7 @@ createButtons() {
       } else {
         this.shiftStatus = true;
       }
-    } else if (event.target.id === 'backspace') {
+    } else if (event.target.id === 'Backspace') {
       this.printedText.value = this.printedText.value.slice(0, -1);
     } else if (event.target.id === 'Enter') {
       this.printedText.setRangeText('\n', this.printedText.selectionStart, this.printedText.selectionEnd, 'end');
