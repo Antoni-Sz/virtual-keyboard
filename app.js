@@ -153,7 +153,7 @@ createButtons() {
   addListeners() {
     document.addEventListener('keydown', (event) => this.KeyDown(event));
   }
-  RealKeyDown(event) {
+  KeyDown(event) {
     event.preventDefault();
     if (!codesArray.includes(event.code)) { return; }
     this.printedText.focus();
