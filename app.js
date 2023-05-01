@@ -135,7 +135,7 @@ createButtons() {
     for (let x = 0; x < this.keys.length; x += 1) {
       const button = allButtons[x];
       if (Array.isArray(this.keys[x])) {
-        button.classList.add('doubleInputButton');
+        button.classList.add('doubleButton');
         const noShiftText = document.createElement('div');
         const shiftText = document.createElement('div');
         shiftText.classList.add('shiftText');
@@ -153,6 +153,7 @@ createButtons() {
   addListeners() {
     document.addEventListener('keydown', (event) => this.KeyDown(event));
     document.addEventListener('keyup', (event) => this.KeyUp(event));
+    document.addEventListener('mousedown', (event) => this.MouseDown(event));
   }
   KeyDown(event) {
     event.preventDefault();
@@ -244,6 +245,115 @@ createButtons() {
       document.getElementById(`${event.code}`).classList.remove('active');
     }
   }
+  MouseDown(event) {
+    const ShiftLeft = document.getElementById('ShiftLeft');
+    const ShiftRight = document.getElementById('ShiftRight');
+    const activeKey = KeysAll[event.target.id];
+
+    if (!event.target.classList.contains('button') && !event.target.parentNode.classList.contains('button')) { return; }
+
+    if (event.target.id === 'CapsLock') {
+      if (event.target.classList.contains('active')) {
+        event.target.classList.remove('active');
+      } else {
+        event.target.classList.add('active');
+      }
+    } else {
+      event.target.classList.add('active');
+      event.target.parentNode.classList.add('active');
+    }
+
+    if (event.target.id === 'ControlLeft' && document.getElementById('ShiftLeft').classList.contains('active')) {
+      document.getElementById('ShiftLeft').classList.remove('active');
+      this.shiftStatus = false;
+      this.changeLanguage();
+      return;
+    }
+
+    if (event.target.parentNode.classList.contains('doubleButton') && !this.shiftStatus) {
+      this.printedText.value += KeysAll[event.target.parentNode.id][0];
+    } else if (event.target.parentNode.classList.contains('doubleButton') && this.shiftStatus) {
+      this.printedText.value += KeysAll[event.target.parentNode.id][1];
+
+      this.shiftStatus = false;
+      ShiftLeft.classList.remove('active');
+      ShiftRight.classList.remove('active');
+    } else if (this.language === 'EN' && activeKey[1] !== 'ctrlButton') {
+      if (!this.shiftStatus && !this.CapsLockStatus) {
+        this.printedText.value += activeKey[0];
+      } else if (this.shiftStatus && !this.CapsLockStatus) {
+        this.printedText.value += activeKey[1];
+        this.shiftStatus = false;
+        ShiftLeft.classList.remove('active');
+        ShiftRight.classList.remove('active');
+      } else if (!this.shiftStatus && this.CapsLockStatus) {
+        if (!event.target.id.match(/(Digit)[0-9]/) && !event.target.id.match(/.*(ash)/)) {
+          this.printedText.value += activeKey[1];
+        } else {
+          this.printedText.value += activeKey[0];
+        }
+      } else if (this.shiftStatus && this.CapsLockStatus) {
+        if (!event.target.id.match(/(Digit)[0-9]/) && !event.target.id.match(/.*(ash)/)) {
+          this.printedText.value += activeKey[0];
+        } else {
+          this.printedText.value += activeKey[1];
+        }
+
+        this.shiftStatus = false;
+        ShiftLeft.classList.remove('active');
+        ShiftRight.classList.remove('active');
+      }
+    } else if (this.language === 'RU' && activeKey[1] !== 'ctrlButton') {
+      if (!this.shiftStatus && !this.CapsLockStatus) {
+        this.printedText.value += activeKey[2];
+      } else if (this.shiftStatus && !this.CapsLockStatus) {
+        this.printedText.value += activeKey[3];
+
+        this.shiftStatus = false;
+        ShiftLeft.classList.remove('active');
+        ShiftRight.classList.remove('active');
+      } else if (!this.shiftStatus && this.CapsLockStatus) {
+        if (!event.target.id.match(/(Digit)[0-9]/) && !event.target.id.match(/.*(ash)/)) {
+          this.printedText.value += activeKey[3];
+        } else {
+          this.printedText.value += activeKey[2];
+        }
+      } else if (this.shiftStatus && this.CapsLockStatus) {
+        if (!event.target.id.match(/(Digit)[0-9]/) && !event.target.id.match(/.*(ash)/)) {
+          this.printedText.value += activeKey[2];
+          this.shiftStatus = false;
+          ShiftLeft.classList.remove('active');
+          ShiftRight.classList.remove('active');
+        } else {
+          this.printedText.value += activeKey[3];
+          this.shiftStatus = false;
+          ShiftLeft.classList.remove('active');
+          ShiftRight.classList.remove('active');
+        }
+      }
+    } else if (event.target.id === 'CapsLock') {
+      if (this.CapsLockStatus) {
+        this.CapsLockStatus = false;
+      } else {
+        this.CapsLockStatus = true;
+      }
+    } else if (activeKey[0] === 'Shift') {
+      if (this.shiftStatus) {
+        this.shiftStatus = false;
+        ShiftLeft.classList.remove('active');
+        ShiftRight.classList.remove('active');
+      } else {
+        this.shiftStatus = true;
+      }
+    } else if (event.target.id === 'backspace') {
+      this.printedText.value = this.printedText.value.slice(0, -1);
+    } else if (event.target.id === 'Enter') {
+      this.printedText.setRangeText('\n', this.printedText.selectionStart, this.printedText.selectionEnd, 'end');
+    } else if (event.target.id.match(/(Arrow).*/)) {
+      this.printedText.value += event.target.innerHTML;
+    }
+  }
+
 }
 
 const NewKeyboard = new Keyboard();
