@@ -152,6 +152,7 @@ createButtons() {
   }
   addListeners() {
     document.addEventListener('keydown', (event) => this.KeyDown(event));
+    document.addEventListener('keyup', (event) => this.KeyUp(event));
   }
   KeyDown(event) {
     event.preventDefault();
@@ -230,6 +231,19 @@ createButtons() {
       this.printedText.setRangeText('\n', this.printedText.selectionStart, this.printedText.selectionEnd, 'end');
     }
   }
+  KeyUp(event) {
+    event.preventDefault();
+    const activeKey = KeysAll[event.code];
+
+    if (!codesArray.includes(event.code)) { return; }
+
+    if (activeKey[0] === 'Shift') {
+      this.shiftStatus = false;
+    }
+    if (activeKey[0] !== 'CapsLock') {
+      document.getElementById(`${event.code}`).classList.remove('active');
+    }
+  }
 }
 
 const NewKeyboard = new Keyboard();
@@ -237,4 +251,5 @@ const NewKeyboard = new Keyboard();
 NewKeyboard.createMain();
 NewKeyboard.createButtons();
 NewKeyboard.addButtonText();
+NewKeyboard.addListeners();
 
