@@ -9,6 +9,37 @@
     margin: 20px auto;
     padding-left: 48px;
   }
+
+  .printedText {
+    width: 900px;
+    height: 250px;
+    font-size: 25px;
+    padding: 5px 15px;;
+    margin: 0px -40px;
+  }
+
   .keyboard {
-    background-color: rgb(52, 47, 47);
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    padding: 40px 30px 15px;
+    width: 980px;
+    margin: auto;
+    border-radius: 10px;
+    background-color: rgb(7, 1, 37);
+  }
+
+  .button {
+    height: 55px;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    margin: 3px;
+    background-color: rgb(155, 158, 252);
+    border: 1px solid rgb(158, 212, 248);
+    border-radius: 10px;
+  }
+
+  .information {
+    margin: 15px 530px;
   }
