@@ -150,7 +150,86 @@ createButtons() {
       }
     }
   }
+  addListeners() {
+    document.addEventListener('keydown', (event) => this.KeyDown(event));
+  }
+  RealKeyDown(event) {
+    event.preventDefault();
+    if (!codesArray.includes(event.code)) { return; }
+    this.printedText.focus();
 
+    const pressedKey = document.getElementById(`${event.code}`);
+    const activeKey = KeysAll[event.code];
+
+    if (activeKey[0] === 'CapsLock') {
+      if (pressedKey.classList.contains('active')) {
+        pressedKey.classList.remove('active');
+      } else {
+        pressedKey.classList.add('active');
+      }
+    } else {
+      pressedKey.classList.add('active');
+    }
+
+    if (document.getElementById('ShiftLeft').classList.contains('active') && document.getElementById('ControlLeft').classList.contains('active')) {
+      this.changeLanguage();
+      return;
+    }
+
+    if (event.code.match(/(Arrow).*/)) {
+      this.printedText.value += document.getElementById(`${event.code}`).innerHTML;
+    }
+
+    if (this.language === 'EN' && activeKey[1] !== 'ctrlButton') {
+      if (!this.shiftStatus && !this.CapsLockStatus) {
+        this.printedText.value += activeKey[0];
+      } else if (this.shiftStatus && !this.CapsLockStatus) {
+        this.printedText.value += activeKey[1];
+      } else if (!this.shiftStatus && this.CapsLockStatus) {
+        if (!event.code.match(/(Digit)[0-9]/) && !event.code.match(/.*(ash)/) && event.code !== 'Backquote') {
+          this.printedText.value += activeKey[1];
+        } else {
+          this.printedText.value += activeKey[0];
+        }
+      } else if (this.shiftStatus && this.CapsLockStatus) {
+        if (!event.code.match(/(Digit)[0-9]/) && !event.code.match(/.*(ash)/) && event.code !== 'Backquote') {
+          this.printedText.value += activeKey[0];
+        } else {
+          this.printedText.value += activeKey[1];
+        }
+      }
+    } else if (this.language === 'RU' && activeKey[1] !== 'ctrlButton') {
+      if (!this.shiftStatus && !this.CapsLockStatus) {
+        this.printedText.value += activeKey[2];
+      } else if (this.shiftStatus && !this.CapsLockStatus) {
+        this.printedText.value += activeKey[3];
+      } else if (!this.shiftStatus && this.CapsLockStatus) {
+        if (!event.code.match(/(Digit)[0-9]/) && !event.code.match(/.*(ash)/)) {
+          this.printedText.value += activeKey[3];
+        } else {
+          this.printedText.value += activeKey[2];
+        }
+      } else if (this.shiftStatus && this.CapsLockStatus) {
+        if (!event.code.match(/(Digit)[0-9]/) && !event.code.match(/.*(ash)/)) {
+          this.printedText.value += activeKey[2];
+        } else {
+          this.printedText.value += activeKey[3];
+        }
+      }
+    } else if (event.code === 'CapsLock') {
+      if (this.CapsLockStatus) {
+        this.CapsLockStatus = false;
+      } else {
+        this.CapsLockStatus = true;
+      }
+    } else if (activeKey[0] === 'Shift') {
+      this.shiftStatus = true;
+    } else if (event.code === 'backspace') {
+      this.printedText.value = this.printedText.value.slice(0, -1);
+    } else if (event.code === 'Enter') {
+      this.printedText.setRangeText('\n', this.printedText.selectionStart, this.printedText.selectionEnd, 'end');
+    }
+  }
 }
 
 const NewKeyboard = new Keyboard();
