@@ -12,7 +12,7 @@ const RUSrow1 = ['Ё', ['1', '!'], ['2', '"'], ['3', '№'], ['4', ';'], ['5', '
                 ['8', '*'], ['9', '('], ['0', ')'], ['-', '_'], ['=', '+'], 'backspace'];
 const RUSrow2 = ['Tab', 'Й', 'Ц', 'У', 'К', 'Е', 'Н', 'Г', 'Ш', 'Щ', 'З', 'Х', 'Ъ', ['\\', '/']];
 const RUSrow3 = ['CapsLock', 'Ф', 'Ы', 'В', 'А', 'П', 'Р', 'О', 'Л', 'Д', 'Ж', 'Э', 'enter'];
-const RUSrow4 = ['Shift', 'Я', 'Ч', 'С', 'М', 'И', 'Т', 'Ь', 'Б', 'Ю', ['.', ','], '↑;', 'Shift'];
+const RUSrow4 = ['Shift', 'Я', 'Ч', 'С', 'М', 'И', 'Т', 'Ь', 'Б', 'Ю', ['.', ','], '↑', 'Shift'];
 
 //KeysAll содержит информацию о клавишах на клавиатуре и соответствующие им символы
 const KeysAll = {
@@ -150,6 +150,8 @@ createButtons() {
       }
     }
   }
+
+
   addListeners() {
     document.addEventListener('keydown', (event) => this.KeyDown(event));
     document.addEventListener('keyup', (event) => this.KeyUp(event));
@@ -374,13 +376,51 @@ createButtons() {
     this.printedText.focus();
   }
 
+  setLanguage() {
 
+    if (localStorage.getItem('language') === 'RU') {
+      this.language = 'RU';
+      this.keys = RUSrow1.concat(RUSrow2, RUSrow3, RUSrow4, row5);
+    } else {
+      localStorage.setItem('language', 'EN');
+      this.language = 'EN';
+      this.keys = ENGrow1.concat(ENGrow2, ENGrow3, ENGrow4, row5);
+    }
+  }
+
+  changeLanguage() {
+    const CapsLockActive = document.getElementById('CapsLock').classList.contains('active');
+
+    if (this.language === 'RU') {
+      this.language = 'EN';
+      localStorage.setItem('language', 'EN');
+      this.keys = ENGrow1.concat(ENGrow2, ENGrow3, ENGrow4, row5);
+    } else if (this.language === 'EN') {
+      this.language = 'RU';
+      localStorage.setItem('language', 'RU');
+      this.keys = RUSrow1.concat(RUSrow2, RUSrow3, RUSrow4, row5);
+    }
+
+    this.currentLanguage.innerText = this.language;
+    const allButtons = this.KeyboardWindow.querySelectorAll('.button');
+    allButtons.forEach((elem) => {
+      elem.remove();
+    });
+    this.createButtons();
+    this.addButtonText();
+
+    if (CapsLockActive) { document.getElementById('CapsLock').classList.add('active') }
+  }
 }
 
 const NewKeyboard = new Keyboard();
 
+NewKeyboard.setLanguage();
 NewKeyboard.createMain();
 NewKeyboard.createButtons();
 NewKeyboard.addButtonText();
 NewKeyboard.addListeners();
+
+
+
 
