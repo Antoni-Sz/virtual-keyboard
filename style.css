@@ -1,0 +1,72 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  .inputWindow {
+    width: 920px;
+    margin: 20px auto;
+    padding-left: 48px;
+  }
+
+  .printedText {
+    width: 900px;
+    height: 250px;
+    font-size: 25px;
+    padding: 5px 15px;;
+    margin: 0px -40px;
+  }
+
+  .keyboard {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    padding: 40px 30px 15px;
+    width: 980px;
+    margin: auto;
+    border-radius: 10px;
+    background-color: rgb(7, 1, 37);
+  }
+
+  .button {
+    height: 55px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    margin: 3px;
+    background-color: rgb(155, 158, 252);
+    border-radius: 10px;
+    transition: ease 0.4s;
+  }
+
+  .information {
+    margin: 15px 530px;
+  }
+  .button:hover {
+    cursor: pointer;
+    border: 2px solid rgb(179, 181, 247);
+    font-weight: 500;
+  }
+
+  .button.active {
+    background-color:  rgb(129, 133, 251);
+    font-weight: 500;
+    border-radius: 15px;
+    color: rgb(16, 113, 146);
+  }
+
+  .shiftText {
+    position: absolute;
+    top:0;
+    left:0;
+    margin: 4px 6px;
+  }
+
+
+
+  #Tab, #ShiftLeft, #CapsLock, #Backspace {
+    justify-content: flex-start;
+    padding-left: 10px;
+  }
