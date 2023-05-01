@@ -154,6 +154,8 @@ createButtons() {
     document.addEventListener('keydown', (event) => this.KeyDown(event));
     document.addEventListener('keyup', (event) => this.KeyUp(event));
     document.addEventListener('mousedown', (event) => this.MouseDown(event));
+    document.addEventListener('mouseup', (event) => this.MouseUp(event));
+    document.addEventListener('mouseout', (event) => this.MouseOut(event));
   }
   KeyDown(event) {
     event.preventDefault();
@@ -353,6 +355,25 @@ createButtons() {
       this.printedText.value += event.target.innerHTML;
     }
   }
+  MouseUp(event) {
+    if (event.target.id !== 'CapsLock' && !event.target.id.match(/.*(Shift)/)) {
+      if (event.target.classList) {
+        event.target.classList.remove('active');
+      }
+      if (event.target.parentNode.classList) {
+        event.target.parentNode.classList.remove('active');
+      }
+    }
+    this.printedText.focus();
+  }
+
+  MouseOut(event) {
+    if (event.target.id !== 'CapsLock' && !event.target.id.match(/.*(Shift)/)) {
+      event.target.classList.remove('active');
+    }
+    this.printedText.focus();
+  }
+
 
 }
 
